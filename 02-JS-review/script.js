@@ -145,14 +145,15 @@ function getBook(id) {
 
 // Destructuring
 
-const book = getBook(1);
+const book = getBook(2);
 
 // Object destructuring
-const { title, author, id, genres } = book;
+let { title, author, id, genres, pages, hasMovieAdaptation } = book;
 title;
 author;
 id;
 genres;
+pages = 200;
 
 // Array Destructuring and Rest Operator
 const [primaryGenre, secondaryGenre, ...otherGenres] = genres;
@@ -173,6 +174,33 @@ const updatedBooks = {
   movieReleaseDate: "2004-02-23",
 
   // Overriding an existing property
-  pages: "200",
+  pages: "480",
 };
 updatedBooks;
+
+// Ternary Operator
+console.log(pages > 100 ? "more than a 100" : "less than a 100");
+
+// ShortCircuiting and Logical operators
+
+// && operator always returns the second operand's value if the first operand is true
+console.log(true && true);
+console.log(true && false);
+
+// This is what they actually call SHORT CIRCUITING because the 2nd operand wont even be checkedd at all once the first operand is false
+console.log(false && false);
+console.log(false && true);
+
+// For fun
+console.log(hasMovieAdaptation && "has a movie");
+
+// for the || Operator, its the oppoosite, meaning that it  SHORTCIRCUIT whenever the first operand is true this time around
+console.log(true || false);
+console.log(true || true);
+
+console.log(false || false);
+console.log(false || true);
+
+// Setting Default Values
+const spanishTranslation = book.translations.spanish || "Not translated";
+spanishTranslation;
