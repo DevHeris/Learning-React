@@ -145,15 +145,34 @@ function getBook(id) {
 
 // Destructuring
 
-const book = getBook(2);
+const book = getBook(1);
 
-//Object destructuring
+// Object destructuring
 const { title, author, id, genres } = book;
 title;
 author;
 id;
 genres;
 
-// Array Destructuring
-const [primaryGenre, secondaryGenre] = genres;
+// Array Destructuring and Rest Operator
+const [primaryGenre, secondaryGenre, ...otherGenres] = genres;
+
 console.log(primaryGenre, secondaryGenre);
+otherGenres;
+
+// Spread Operator for Arrays
+const newGenres = [...genres, "epic fantasy"];
+
+newGenres;
+
+// Spread Operator for Objects
+const updatedBooks = {
+  ...book,
+
+  // Adding a new property
+  movieReleaseDate: "2004-02-23",
+
+  // Overriding an existing property
+  pages: "200",
+};
+updatedBooks;
