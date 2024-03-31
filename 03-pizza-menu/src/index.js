@@ -68,19 +68,76 @@ function Header() {
 function Menu() {
   return (
     <main className="menu">
-      <Pizza />
-      <Pizza />
-      <Pizza />
-      <Pizza />
+      <h2>Our menu</h2>
+      <p>
+        Authentic Italian cuisine. 6 creative dishes to choose from. All from
+        our stove oven, all organic, all delicious
+      </p>
+      <ul className="pizzas">
+        <Pizza
+          name="Focaccia"
+          photoName="pizzas/focaccia.jpg"
+          ingredients="Bread with italian olive oil and rosemary"
+          price="6"
+          soldOut="false"
+        />
+        <Pizza
+          name="Pizza Margherita"
+          photoName="pizzas/margherita.jpg"
+          ingredients="Tomato and mozarella"
+          price="10"
+          soldOut="false"
+        />
+        <Pizza
+          name="Pizza Spinaci"
+          photoName="pizzas/spinaci.jpg"
+          ingredients="Tomato, mozarella, spinach, and ricotta cheese"
+          price="12"
+          soldOut="false"
+        />
+        <Pizza
+          name="Pizza Funghi"
+          photoName="pizzas/funghi.jpg"
+          ingredients="Tomato, mozarella, mushrooms, and onion"
+          price="12"
+          soldOut="false"
+        />
+        <Pizza
+          name="Pizza Salamino"
+          photoName="pizzas/salamino.jpg"
+          ingredients="Tomato, mozarella, and pepperoni"
+          price="15"
+          soldOut="true"
+        />
+        <Pizza
+          name="Pizza Prosciutto"
+          photoName="pizzas/prosciutto.jpg"
+          ingredients="Tomato, mozarella, ham, aragula, and burrata cheese"
+          price="18"
+          soldOut="false"
+        />
+      </ul>
     </main>
   );
 }
 
-const Footer = () => {
+function Pizza({ name, photoName, ingredients, price, soldOut }) {
+  return (
+    <li className="pizza">
+      <img src={photoName} alt={name} />
+      <div>
+        <h3>{name}</h3>
+        <p>{ingredients}</p>
+        <span>{price}</span>
+      </div>
+    </li>
+  );
+}
+
+function Footer() {
   const hour = new Date().getHours();
   const openHour = 8;
   const closeHour = 20;
-
   const isOpen = hour >= openHour && hour <= closeHour;
 
   return (
@@ -88,17 +145,7 @@ const Footer = () => {
       {new Date().toLocaleTimeString()}. We're currently open.
     </footer>
   );
-};
-
-const Pizza = () => {
-  return (
-    <>
-      <img src="/pizzas/prosciutto.jpg" alt="pizza prosciutto" />
-      <h3>Pizza Prosciutto</h3>
-      <p>Tomato, mozarella, ham, aragula, and burrata cheese</p>
-    </>
-  );
-};
+}
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
