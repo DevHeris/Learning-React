@@ -23,7 +23,7 @@ function Avatar() {
 function Intro() {
   return (
     <>
-      <h1>Inioluwa Badairo</h1>
+      <h1>DevHeris</h1>
       <p>
         I'm a frontend developer and biochemistry student at Obafemi Awolowo
         University. By day, I'm crafting awesome websites, and by night, I'm
@@ -37,19 +37,20 @@ function Intro() {
 function SkillList() {
   return (
     <ul className="skill-list">
-      <Skill skillName="HTML &#128508;" color="red" />
-      <Skill skillName="CSS &#128509;" color="blue" />
-      <Skill skillName="Git & GitHub &#128510;" color="yellow" />
-      <Skill skillName="JavaScript &#128511;" color="green" />
-      <Skill skillName="React &#128507;" color="purple" />
+      <Skill skillName="HTML " emoji="&#128508;" color="red" />
+      <Skill skillName="CSS " emoji="&#128509;" color="blue" />
+      <Skill skillName="Git & GitHub " emoji="&#128510;" color="grey" />
+      <Skill skillName="JavaScript " emoji=" &#128511;" color="yellow" />
+      <Skill skillName="React " emoji="&#128507;" color="lightblue" />
     </ul>
   );
 }
 
-function Skill({ skillName, color }) {
+function Skill({ skillName, color, emoji }) {
   return (
     <li className="skill" style={{ backgroundColor: color }}>
-      {skillName}
+      <span>{skillName}</span>
+      <span>{emoji}</span>
     </li>
   );
 }

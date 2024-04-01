@@ -74,12 +74,9 @@ function Menu() {
         our stove oven, all organic, all delicious
       </p>
       <ul className="pizzas">
-        <Pizza {...pizzaData[0]} />
-        <Pizza {...pizzaData[1]} />
-        <Pizza {...pizzaData[2]} />
-        <Pizza {...pizzaData[3]} />
-        <Pizza {...pizzaData[4]} />
-        <Pizza {...pizzaData[5]} />
+        {pizzaData.map((pizza) => {
+          return <Pizza {...pizza} />;
+        })}
       </ul>
     </main>
   );
