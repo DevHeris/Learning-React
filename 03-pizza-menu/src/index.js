@@ -73,11 +73,18 @@ function Menu() {
         Authentic Italian cuisine. 6 creative dishes to choose from. All from
         our stove oven, all organic, all delicious
       </p>
-      <ul className="pizzas">
-        {pizzaData.map((pizza) => {
-          return <Pizza {...pizza} key={pizza.name} />;
-        })}
-      </ul>
+
+      {/* Conditional rendering with the ternary operator */}
+
+      {pizzaData.length > 0 ? (
+        <ul className="pizzas">
+          {pizzaData.map((pizza) => {
+            return <Pizza {...pizza} key={pizza.name} />;
+          })}
+        </ul>
+      ) : (
+        <p>We're still working on our menu. Please come back later :)</p>
+      )}
     </main>
   );
 }
@@ -103,12 +110,16 @@ function Footer() {
 
   return (
     <footer className="footer">
-      {isOpen && (
+      {isOpen ? (
         <div className="order">
           <p>We're open until {closeHour}:00. Come visit us or order online.</p>
 
           <button className="btn">Order</button>
         </div>
+      ) : (
+        <p>
+          We're happy to recieve you between {openHour}:00 and {closeHour}:00{" "}
+        </p>
       )}
     </footer>
   );
