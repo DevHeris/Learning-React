@@ -74,48 +74,12 @@ function Menu() {
         our stove oven, all organic, all delicious
       </p>
       <ul className="pizzas">
-        <Pizza
-          name="Focaccia"
-          photoName="pizzas/focaccia.jpg"
-          ingredients="Bread with italian olive oil and rosemary"
-          price="6"
-          soldOut="false"
-        />
-        <Pizza
-          name="Pizza Margherita"
-          photoName="pizzas/margherita.jpg"
-          ingredients="Tomato and mozarella"
-          price="10"
-          soldOut="false"
-        />
-        <Pizza
-          name="Pizza Spinaci"
-          photoName="pizzas/spinaci.jpg"
-          ingredients="Tomato, mozarella, spinach, and ricotta cheese"
-          price="12"
-          soldOut="false"
-        />
-        <Pizza
-          name="Pizza Funghi"
-          photoName="pizzas/funghi.jpg"
-          ingredients="Tomato, mozarella, mushrooms, and onion"
-          price="12"
-          soldOut="false"
-        />
-        <Pizza
-          name="Pizza Salamino"
-          photoName="pizzas/salamino.jpg"
-          ingredients="Tomato, mozarella, and pepperoni"
-          price="15"
-          soldOut="true"
-        />
-        <Pizza
-          name="Pizza Prosciutto"
-          photoName="pizzas/prosciutto.jpg"
-          ingredients="Tomato, mozarella, ham, aragula, and burrata cheese"
-          price="18"
-          soldOut="false"
-        />
+        <Pizza {...pizzaData[0]} />
+        <Pizza {...pizzaData[1]} />
+        <Pizza {...pizzaData[2]} />
+        <Pizza {...pizzaData[3]} />
+        <Pizza {...pizzaData[4]} />
+        <Pizza {...pizzaData[5]} />
       </ul>
     </main>
   );

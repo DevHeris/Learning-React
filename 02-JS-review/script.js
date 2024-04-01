@@ -145,6 +145,7 @@ function getBook(id) {
 
 // Destructuring
 
+/*
 const book = getBook(3);
 
 // Object destructuring
@@ -187,7 +188,7 @@ console.log(pages > 100 ? "more than a 100" : "less than a 100");
 console.log(true && true);
 console.log(true && false);
 
-// This is what they actually call SHORT CIRCUITING because the 2nd operand wont even be checkedd at all once the first operand is false
+// This is what they actually call SHORT CIRCUITING because the 2nd operand wont even be checked at all once the first operand is false
 console.log(false && false);
 console.log(false && true);
 
@@ -214,3 +215,24 @@ const getTotalReviewCount = (book) => {
 };
 
 console.log(getTotalReviewCount(book));
+
+*/
+
+// ARRAY METHODS
+
+const books = getBooks();
+books;
+
+const bookTitles = books.map((bk) => bk.title);
+bookTitles;
+
+const essentialData = books.map((bk) => ({
+  title: bk.title,
+  author: bk.author,
+}));
+essentialData;
+
+// Filter method to create an array with book with more than  500 pages
+const longBooks = books.filter((bk) => bk.pages >= 500);
+
+longBooks;
