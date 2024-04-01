@@ -1,6 +1,7 @@
 import React, { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./styles.css";
+import skills from "./skills";
 
 function App() {
   return (
@@ -37,20 +38,28 @@ function Intro() {
 function SkillList() {
   return (
     <ul className="skill-list">
-      <Skill skillName="HTML " emoji="&#128508;" color="red" />
+      {skills.map((skill) => {
+        return <Skill {...skill} key={skill.skillName} />;
+      })}
+
+      {/* <Skill skillName="HTML " emoji="&#128508;" color="red" />
       <Skill skillName="CSS " emoji="&#128509;" color="blue" />
       <Skill skillName="Git & GitHub " emoji="&#128510;" color="grey" />
       <Skill skillName="JavaScript " emoji=" &#128511;" color="yellow" />
-      <Skill skillName="React " emoji="&#128507;" color="lightblue" />
+      <Skill skillName="React " emoji="&#128507;" color="lightblue" /> */}
     </ul>
   );
 }
 
-function Skill({ skillName, color, emoji }) {
+function Skill({ skillName, color, level }) {
   return (
     <li className="skill" style={{ backgroundColor: color }}>
       <span>{skillName}</span>
-      <span>{emoji}</span>
+      <span>
+        {level === "beginner" && "👶"}
+        {level === "advanced" && "💪"}
+        {level === "intermediate" && "👍"}
+      </span>
     </li>
   );
 }
