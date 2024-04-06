@@ -71,3 +71,30 @@ function SelectInput({ options, children, tip, onSelect, who }) {
 }
 
 export default App;
+
+function SelectInput({ options, children, tip, onSelect, who }) {
+  function setTipHandler(e) {
+    const selectedTip = Number(e.target.value);
+    onSelect((curTip) => {
+      // Check if the tip is for the tipper or the friend
+      if (who === "tipper") {
+        return curTip + selectedTip; // Add tip to tipper's tip
+      } else {
+        return curTip + selectedTip; // Add tip to friend's tip
+      }
+    });
+  }
+
+  return (
+    <>
+      <label>{children}</label>
+      <select value={20} onChange={setTipHandler}>
+        {options.map((option) => (
+          <option value={option.percent} key={option.percent}>
+            {option.description} ({option.percent}%)
+          </option>
+        ))}
+      </select>
+    </>
+  );
+}
