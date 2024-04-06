@@ -1,35 +1,52 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+/* eslint-disable react/prop-types */
+import { useState } from "react";
+import "./styles.css";
 
-function App() {
-  const [count, setCount] = useState(0)
+const faqs = [
+  {
+    title: "Where are these chairs assembled?",
+    text: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Accusantium, quaerat temporibus quas dolore provident nisi ut aliquid ratione beatae sequi aspernatur veniam repellendus.",
+  },
+  {
+    title: "How long do I have to return my chair?",
+    text: "Pariatur recusandae dignissimos fuga voluptas unde optio nesciunt commodi beatae, explicabo natus.",
+  },
+  {
+    title: "Do you ship to countries outside the EU?",
+    text: "Excepturi velit laborum, perspiciatis nemo perferendis reiciendis aliquam possimus dolor sed! Dolore laborum ducimus veritatis facere molestias!",
+  },
+];
 
+export default function App() {
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div>
+      <Accordion data={faqs} />
+    </div>
+  );
 }
 
-export default App
+function Accordion({ data }) {
+  return (
+    <div className="accordion">
+      {data.map((el, i) => (
+        <AccordionItem num={i} title={el.title} text={el.text} key={el.title} />
+      ))}
+    </div>
+  );
+}
+
+function AccordionItem({ num, title, text }) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <div
+      className={`item ${isOpen ? "open" : ""}`}
+      onClick={() => setIsOpen((isOpen) => !isOpen)}
+    >
+      <p className="number">{num < 9 ? `0${num + 1}` : num + 1}</p>
+      <p className="title">{title}</p>
+      <p className="icon">{isOpen ? "-" : "+"}</p>
+      {isOpen && <div className="content-box">{text}</div>}
+    </div>
+  );
+}
