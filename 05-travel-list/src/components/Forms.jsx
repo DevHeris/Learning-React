@@ -17,7 +17,7 @@ export default function Form({ onAddItem }) {
     };
 
     onAddItem(newItem);
-
+ 
     setDescription("");
     setQuantity(1);
   }
