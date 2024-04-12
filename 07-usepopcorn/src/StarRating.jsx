@@ -1,5 +1,5 @@
-/* eslint-disable react/prop-types */
 import { useState } from "react";
+import PropTypes from "prop-types";
 
 const containerStyle = {
   display: "flex",
@@ -9,6 +9,17 @@ const containerStyle = {
 
 const starContainerStyle = {
   display: "flex",
+};
+
+// StarRating component prop validation
+StarRating.propTypes = {
+  maxRating: PropTypes.number,
+  color: PropTypes.string,
+  size: PropTypes.number,
+  messages: PropTypes.array,
+  className: PropTypes.string,
+  defaultRating: PropTypes.number,
+  onSetRating: PropTypes.func,
 };
 
 export default function StarRating({
@@ -59,6 +70,17 @@ export default function StarRating({
     </div>
   );
 }
+
+// Prop validation for Star component
+Star.propTypes = {
+  onRate: PropTypes.func,
+  full: PropTypes.bool,
+  onHoverIn: PropTypes.func,
+  onHoverOut: PropTypes.func,
+  color: PropTypes.string,
+  size: PropTypes.number,
+  className: PropTypes.string,
+};
 
 function Star({ onRate, full, onHoverIn, onHoverOut, color, size, className }) {
   const starStyle = {
