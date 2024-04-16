@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const tempMovieData = [
   {
@@ -51,38 +51,9 @@ const tempWatchedData = [
 const average = (arr) =>
   arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
 
-const API_KEY = "82589ce2";
-
 function App() {
-  const [movies, setMovies] = useState([]);
-  const [watched, setWatched] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
-
-  const query = "split";
-
-  useEffect(() => {
-    async function fetchMovies() {
-      try {
-        setIsLoading(true);
-        const res = await fetch(
-          `http://www.omdbapi.com/?i=tt3896198&apikey=${API_KEY}&s=${query}`
-        );
-
-        if (!res.ok)
-          throw new Error("Something went wrong with fetching movies");
-
-        const { Search } = await res.json();
-        setMovies(Search);
-        setIsLoading(false);
-      } catch (err) {
-        setError(err.message);
-        console.log(err.message);
-      }
-    }
-
-    fetchMovies();
-  }, []);
+  const [movies, setMovies] = useState(tempMovieData);
+  const [watched, setWatched] = useState(tempWatchedData);
 
   return (
     <>
@@ -94,10 +65,7 @@ function App() {
 
       <Main>
         <Box>
-          {!isLoading && !error && <MovieList movies={movies} />}
-          {!error && isLoading && <Loader />}
-          {error && <ErrorMessage message={error} />}
-          {/* {isLoading ? <Loader /> : <MovieList movies={movies} />}  */}
+          <MovieList movies={movies} />
         </Box>
         <Box>
           <WatchedSummary watched={watched} />
@@ -106,18 +74,6 @@ function App() {
       </Main>
     </>
   );
-}
-
-function ErrorMessage({ message }) {
-  return (
-    <p className="error">
-      <span>⛔</span> {message}
-    </p>
-  );
-}
-
-function Loader() {
-  return <div className="loader">Loading...</div>;
 }
 
 function NavBar({ children }) {
