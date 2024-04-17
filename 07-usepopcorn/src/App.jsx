@@ -80,6 +80,7 @@ const App = () => {
       return;
     }
 
+    handleCloseMovieDetail();
     fetchMovies();
 
     return () => controller.abort();
@@ -280,6 +281,7 @@ const MovieDetails = ({ selectedId, onMovieClose, onAddWatched, watched }) => {
 
     document.addEventListener("keydown", callback);
 
+    // Cleaning up event listener
     return () => {
       document.removeEventListener("keydown", callback);
     };
