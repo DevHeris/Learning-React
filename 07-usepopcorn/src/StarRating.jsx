@@ -11,7 +11,7 @@ const starContainerStyle = {
   display: "flex",
 };
 
-// StarRating component prop validation
+// StarRating component prop type validation
 StarRating.propTypes = {
   maxRating: PropTypes.number,
   color: PropTypes.string,
