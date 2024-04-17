@@ -58,6 +58,19 @@ body {
   position: relative;
 }
 
+.box::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+.box::-webkit-scrollbar-track {
+  background: #6741d9;
+}
+
+.box::-webkit-scrollbar-thumb {
+  background-color: #6741d9;
+}
+
 .loader {
   text-align: center;
   text-transform: uppercase;
