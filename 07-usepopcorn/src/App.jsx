@@ -92,6 +92,7 @@ const App = () => {
   */
   // Test ends here
   useEffect(() => {
+    const controller = new AbortController();
     async function fetchMovies() {
       try {
         // Error reset
@@ -99,7 +100,8 @@ const App = () => {
         setIsLoading(true);
 
         const res = await fetch(
-          `http://www.omdbapi.com/?i=tt3896198&apikey=${API_KEY}&s=${query}`
+          `http://www.omdbapi.com/?i=tt3896198&apikey=${API_KEY}&s=${query}`,
+          { signal: controller.signal }
         );
 
         if (!res.ok)
@@ -113,7 +115,7 @@ const App = () => {
 
         setIsLoading(false);
       } catch (err) {
-        setError(err.message);
+        if (err.name !== "AbortError") setError(err.message);
       }
     }
 
@@ -125,6 +127,8 @@ const App = () => {
     }
 
     fetchMovies();
+
+    return () => controller.abort();
   }, [query]);
 
   return (
@@ -299,6 +303,7 @@ const MovieDetails = ({ selectedId, onMovieClose, onAddWatched, watched }) => {
   const handleAdd = () => {
     const newMovie = {
       plot,
+      year,
       title,
       poster,
       imdbID: selectedId,
@@ -325,6 +330,15 @@ const MovieDetails = ({ selectedId, onMovieClose, onAddWatched, watched }) => {
     }
     getMovieDetails();
   }, [selectedId]);
+
+  useEffect(() => {
+    if (title === undefined) return;
+    // or could be done using if(!title)return
+    document.title = `Movie | ${title}`;
+
+    // Effect cleanup
+    return () => (document.title = "usePopcorn");
+  }, [title]);
 
   return (
     <div className="details">
