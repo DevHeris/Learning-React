@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import StarRating from "./StarRating";
 
 const average = (arr) =>
@@ -144,8 +144,13 @@ const Logo = () => {
 };
 
 const Search = ({ query, setQuery }) => {
+  const searchRef = useRef();
+
+  useEffect(() => searchRef.current.focus(), []);
+
   return (
     <input
+      ref={searchRef}
       className="search"
       type="text"
       placeholder="Search movies..."
