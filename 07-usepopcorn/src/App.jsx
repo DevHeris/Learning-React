@@ -144,13 +144,26 @@ const Logo = () => {
 };
 
 const Search = ({ query, setQuery }) => {
-  const searchRef = useRef();
+  const inputElRef = useRef(null);
 
-  useEffect(() => searchRef.current.focus(), []);
+  useEffect(() => {
+    const callback = (e) => {
+      if (document.activeElement === inputElRef.current) return;
+
+      if (e.code === "Enter") {
+        inputElRef.current.focus();
+        setQuery("");
+      }
+    };
+
+    document.addEventListener("keypress", callback);
+
+    return () => document.addEventListener("keypress", callback);
+  }, [setQuery]);
 
   return (
     <input
-      ref={searchRef}
+      ref={inputElRef}
       className="search"
       type="text"
       placeholder="Search movies..."
@@ -232,6 +245,9 @@ const MovieDetails = ({ selectedId, onMovieClose, onAddWatched, watched }) => {
   const [movie, setMovie] = useState({});
   const [userRating, setUserRating] = useState("");
 
+  // To know behind the scenes how many times a user rates a movie(still deciding)
+  const countRef = useRef(0);
+
   // Derived state
   const isWatched = watched.map((movie) => movie.imdbID).includes(selectedId);
 
@@ -263,12 +279,17 @@ const MovieDetails = ({ selectedId, onMovieClose, onAddWatched, watched }) => {
       imdbRating: Number(imdbRating),
       runtime: Number(runtime.split(" ").at(0)),
       userRating,
+      countRatingDecisions: countRef.current,
     };
 
     onAddWatched(newMovie);
 
     onMovieClose();
   };
+
+  useEffect(() => {
+    if (userRating) countRef.current += 1;
+  }, [userRating]);
 
   useEffect(() => {
     const callback = (e) => {
