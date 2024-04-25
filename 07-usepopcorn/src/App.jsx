@@ -1,6 +1,9 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useRef, useState } from "react";
 import StarRating from "./StarRating";
+import { useMovies } from "./useMovies";
+import { useLocalStorageState } from "./useLocalStorageState";
+import { useKey } from "./useKey";
 
 const average = (arr) =>
   arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
@@ -9,14 +12,10 @@ const API_KEY = "82589ce2";
 
 const App = () => {
   const [query, setQuery] = useState("");
-  const [movies, setMovies] = useState([]);
-  const [watched, setWatched] = useState(() => {
-    const storedValue = localStorage.getItem("watched");
-    return JSON.parse(storedValue);
-  });
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
+
   const [selectedId, setSelectedId] = useState(null);
+
+  const [watched, setWatched] = useLocalStorageState([], "watched");
 
   const handleMovieSelection = (id) => {
     setSelectedId((selectedId) => (selectedId === id ? null : id));
@@ -34,50 +33,7 @@ const App = () => {
     setWatched((watched) => watched.filter((movie) => movie.imdbID !== id));
   };
 
-  useEffect(() => {
-    localStorage.setItem("watched", JSON.stringify(watched));
-  }, [watched]);
-
-  useEffect(() => {
-    const controller = new AbortController();
-    async function fetchMovies() {
-      try {
-        // Error reset
-        setError("");
-        setIsLoading(true);
-
-        const res = await fetch(
-          `http://www.omdbapi.com/?i=tt3896198&apikey=${API_KEY}&s=${query}`,
-          { signal: controller.signal }
-        );
-
-        if (!res.ok)
-          throw new Error("Something went wrong with fetching movies");
-
-        const data = await res.json();
-
-        if (data.Response === "False") throw new Error("Movie not found");
-
-        setMovies(data.Search);
-        setError("");
-        setIsLoading(false);
-      } catch (err) {
-        if (err.name !== "AbortError") setError(err.message);
-      }
-    }
-
-    // In case the search query is an empty string or is less than 3 letters, then we dont need to make a request to the API
-    if (query.length < 3) {
-      setError("");
-      setMovies([]);
-      return;
-    }
-
-    handleCloseMovieDetail();
-    fetchMovies();
-
-    return () => controller.abort();
-  }, [query]);
+  const { movies, isLoading, error } = useMovies(query);
 
   return (
     <>
@@ -146,20 +102,11 @@ const Logo = () => {
 const Search = ({ query, setQuery }) => {
   const inputElRef = useRef(null);
 
-  useEffect(() => {
-    const callback = (e) => {
-      if (document.activeElement === inputElRef.current) return;
-
-      if (e.code === "Enter") {
-        inputElRef.current.focus();
-        setQuery("");
-      }
-    };
-
-    document.addEventListener("keypress", callback);
-
-    return () => document.addEventListener("keypress", callback);
-  }, [setQuery]);
+  useKey("Enter", () => {
+    if (document.activeElement === inputElRef.current) return;
+    inputElRef.current.focus();
+    setQuery("");
+  });
 
   return (
     <input
@@ -291,20 +238,7 @@ const MovieDetails = ({ selectedId, onMovieClose, onAddWatched, watched }) => {
     if (userRating) countRef.current += 1;
   }, [userRating]);
 
-  useEffect(() => {
-    const callback = (e) => {
-      if (e.code === "Escape") {
-        onMovieClose();
-      }
-    };
-
-    document.addEventListener("keydown", callback);
-
-    // Cleaning up event listener
-    return () => {
-      document.removeEventListener("keydown", callback);
-    };
-  }, [onMovieClose]);
+  useKey("Escape", onMovieClose);
 
   useEffect(() => {
     async function getMovieDetails() {
