@@ -6,6 +6,7 @@ import { useEffect, useReducer } from "react";
 import StartScreen from "./StartScreen";
 import Question from "./Question";
 import NextQuestion from "./NextQuestion";
+import Progress from "./Progress";
 
 const initialState = {
   questions: [],
@@ -45,8 +46,13 @@ function reducerFunc(currState, action) {
 function App() {
   const [state, dispatch] = useReducer(reducerFunc, initialState);
 
-  const { questions, status, quesIndex, answer } = state;
+  const { questions, status, quesIndex, answer, points } = state;
+
   const totalQuestions = questions.length;
+  const maxPossiblePoints = questions.reduce(
+    (prev, curr) => prev + curr.points,
+    0
+  );
 
   useEffect(() => {
     async function fetchData() {
@@ -76,6 +82,13 @@ function App() {
         )}
         {status === "active" && (
           <>
+            <Progress
+              maxPossiblePoints={maxPossiblePoints}
+              points={points}
+              totalQuestions={totalQuestions}
+              quesIndex={quesIndex}
+              answer={answer}
+            />
             <Question
               question={questions[quesIndex]}
               dispatch={dispatch}
