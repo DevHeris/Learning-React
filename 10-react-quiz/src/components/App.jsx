@@ -15,8 +15,6 @@ const initialState = {
 };
 
 function reducerFunc(currState, action) {
-  const question = currState.questions.at(currState.quesIndex);
-  console.log(question);
   switch (action.type) {
     case "dataRecieved":
       return { ...currState, questions: action.payload, status: "ready" };
@@ -24,7 +22,8 @@ function reducerFunc(currState, action) {
       return { ...currState, status: "error" };
     case "start":
       return { ...currState, status: "active" };
-    case "newAnswer":
+    case "newAnswer": {
+      const question = currState.questions.at(currState.quesIndex);
       return {
         ...currState,
         answer: action.payload,
@@ -33,6 +32,7 @@ function reducerFunc(currState, action) {
             ? currState.points + question.points
             : currState.points,
       };
+    }
 
     default:
       throw new Error("Unknown Action");
