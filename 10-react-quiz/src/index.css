@@ -8,8 +8,6 @@
   --color-accent: #ffa94d;
 }
 
-@import url("https://fonts.googleapis.com/css2?family=Codystar&display=swap");
-
 * {
   margin: 0;
   padding: 0;
@@ -62,7 +60,7 @@ img {
 }
 
 h1 {
-  font-family: "Codystar";
+  font-family: "Codystar", sans-serif;
   font-size: 5.6rem;
 }
 
@@ -162,6 +160,7 @@ progress {
   border: 2px solid var(--color-theme);
   color: var(--color-light);
 }
+
 .btn-option.wrong {
   background-color: var(--color-accent);
   border: 2px solid var(--color-accent);
