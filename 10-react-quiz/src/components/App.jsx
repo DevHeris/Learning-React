@@ -5,8 +5,9 @@ import Header from "./Header";
 import { useEffect, useReducer } from "react";
 import StartScreen from "./StartScreen";
 import Question from "./Question";
-import NextQuestion from "./NextQuestion";
+import NextButton from "./NextButton";
 import Progress from "./Progress";
+import FinishScreen from "./FinishScreen";
 
 const initialState = {
   questions: [],
@@ -14,6 +15,7 @@ const initialState = {
   quesIndex: 0,
   answer: null,
   points: 0,
+  highscore: 0,
 };
 
 function reducerFunc(currState, action) {
@@ -37,7 +39,21 @@ function reducerFunc(currState, action) {
     }
     case "nextQuestion":
       return { ...currState, quesIndex: currState.quesIndex + 1, answer: null };
-
+    case "finish":
+      return {
+        ...currState,
+        status: "finished",
+        highscore:
+          currState.points > currState.highscore
+            ? currState.points
+            : currState.highscore,
+      };
+    case "restartQuiz":
+      return {
+        ...initialState,
+        status: "ready",
+        questions: currState.questions,
+      };
     default:
       throw new Error("Unknown Action");
   }
@@ -46,7 +62,7 @@ function reducerFunc(currState, action) {
 function App() {
   const [state, dispatch] = useReducer(reducerFunc, initialState);
 
-  const { questions, status, quesIndex, answer, points } = state;
+  const { questions, status, quesIndex, answer, points, highscore } = state;
 
   const totalQuestions = questions.length;
   const maxPossiblePoints = questions.reduce(
@@ -94,7 +110,27 @@ function App() {
               dispatch={dispatch}
               answer={answer}
             />
-            <NextQuestion dispatch={dispatch} answer={answer} />
+            <NextButton
+              dispatch={dispatch}
+              answer={answer}
+              quesIndex={quesIndex}
+              totalQuestions={totalQuestions}
+            />
+          </>
+        )}
+        {status === "finished" && (
+          <>
+            <FinishScreen
+              maxPossiblePoints={maxPossiblePoints}
+              points={points}
+              highscore={highscore}
+            />
+            <button
+              className="btn btn-ui"
+              onClick={() => dispatch({ type: "restartQuiz" })}
+            >
+              Restart Quiz
+            </button>
           </>
         )}
       </Main>
