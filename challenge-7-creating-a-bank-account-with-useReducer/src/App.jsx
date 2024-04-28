@@ -46,7 +46,7 @@ function reducerFunc(state, action) {
     case "payLoan":
       return {
         ...state,
-        balance: state.loan === 0 ? state.balance : state.balance - 5000,
+        balance: state.loan === 0 ? state.balance : state.balance - state.loan,
         loan: 0,
       };
     case "closeAccount":
