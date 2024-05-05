@@ -2,7 +2,7 @@ import styles from "./CityList.module.css";
 import CityItem from "./CityItem";
 import Spinner from "./Spinner";
 import Message from "./Message";
-import { useCities } from "../contexts/CitiesContext";
+import { useCities } from "../hooks/useCities";
 
 function CityList() {
   const { isLoading, cities } = useCities();
