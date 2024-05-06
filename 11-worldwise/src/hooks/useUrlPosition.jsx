@@ -1,6 +1,6 @@
 import { useSearchParams } from "react-router-dom";
 
-function useUrlPosition() {
+export function useUrlPosition() {
   const [searchParams] = useSearchParams();
 
   const lat = searchParams.get("lat");
@@ -8,5 +8,3 @@ function useUrlPosition() {
 
   return [lat, lng];
 }
-
-export default useUrlPosition;
