@@ -19,7 +19,7 @@ export default function Homepage() {
           you have wandered the world.
         </h2>
 
-        <NavLink to="/app" className="cta">
+        <NavLink to="/login" className="cta">
           Start tracking now
         </NavLink>
       </section>
