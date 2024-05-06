@@ -2,7 +2,6 @@ import Main from "./Main";
 import Loader from "./Loader";
 import Error from "./Error";
 import Header from "./Header";
-import { useEffect } from "react";
 import StartScreen from "./StartScreen";
 import Question from "./Question";
 import NextButton from "./NextButton";
@@ -14,23 +13,6 @@ import { useQuiz } from "../hooks/useQuiz";
 
 function App() {
   const { dispatch, status } = useQuiz();
-
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const resp = await fetch("http://localhost:3000/questions/");
-
-        if (!resp.ok) throw new Error("Failed to fetch questions");
-
-        const data = await resp.json();
-
-        dispatch({ type: "dataRecieved", payload: data });
-      } catch (error) {
-        dispatch({ type: "dataFailed" });
-      }
-    }
-    fetchData();
-  }, [dispatch]);
 
   return (
     <div className="app">

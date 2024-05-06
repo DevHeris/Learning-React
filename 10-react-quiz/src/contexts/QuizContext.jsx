@@ -1,4 +1,4 @@
-import { createContext, useReducer } from "react";
+import { createContext, useEffect, useReducer } from "react";
 
 const QuizContext = createContext();
 
@@ -85,6 +85,23 @@ function QuizProvider({ children }) {
     0
   );
 
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const resp = await fetch("http://localhost:3000/questions/");
+
+        if (!resp.ok) throw new Error("Failed to fetch questions");
+
+        const data = await resp.json();
+
+        dispatch({ type: "dataRecieved", payload: data });
+      } catch (error) {
+        dispatch({ type: "dataFailed" });
+      }
+    }
+    fetchData();
+  }, [dispatch]);
+
   return (
     <QuizContext.Provider
       value={{
@@ -95,9 +112,9 @@ function QuizProvider({ children }) {
         points,
         highscore,
         secondsRemaining,
-        dispatch,
         totalQuestions,
         maxPossiblePoints,
+        dispatch,
       }}
     >
       {children}
