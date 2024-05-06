@@ -1,7 +1,4 @@
-import { useQuiz } from "../hooks/useQuiz";
-
-function NextQuestion() {
-  const { dispatch, answer, quesIndex, totalQuestions } = useQuiz();
+function NextQuestion({ dispatch, answer, quesIndex, totalQuestions }) {
   if (answer === null) return;
   if (quesIndex < totalQuestions - 1)
     return (
