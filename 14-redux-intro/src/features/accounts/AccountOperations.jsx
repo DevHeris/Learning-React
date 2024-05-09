@@ -35,7 +35,9 @@ function AccountOperations() {
             <option value="GBP">British Pound</option>
           </select>
 
-          <button onClick={handleDeposit}>Deposit {depositAmount}</button>
+          <button onClick={handleDeposit}>
+            Deposit {currency} {depositAmount}
+          </button>
         </div>
 
         <div>
@@ -46,7 +48,7 @@ function AccountOperations() {
             onChange={(e) => setWithdrawalAmount(+e.target.value)}
           />
           <button onClick={handleWithdrawal}>
-            Withdraw {withdrawalAmount}
+            Withdraw {currency} {withdrawalAmount}
           </button>
         </div>
 
