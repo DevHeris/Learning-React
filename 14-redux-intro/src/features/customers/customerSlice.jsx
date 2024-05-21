@@ -1,10 +1,10 @@
-const initialCustomerState = {
+const initialCustomer = {
   fullName: "",
   createdAt: "",
   nationalID: "",
 };
 
-export default function customerReducer(state = initialCustomerState, action) {
+export default function customerReducer(state = initialCustomer, action) {
   switch (action.type) {
     case "customer/createCustomer":
       return {
