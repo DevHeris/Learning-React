@@ -20,6 +20,7 @@ function SearchOrder() {
         type="search"
         placeholder="Search order #"
         value={orderID}
+        className="rounded-full bg-yellow-100 px-4 py-2 text-sm"
         onChange={(e) => setOrderID(e.target.value)}
       />
     </form>
