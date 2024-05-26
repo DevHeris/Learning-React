@@ -35,8 +35,7 @@ function MenuItem({ pizza }) {
       <div className=" flex grow flex-col pt-0.5">
         <p className="font-medium">{name}</p>
         <p className="text-sm capitalize italic text-stone-500">
-          {/* {ingredients.join(", ")} */}
-          {ingredients}
+          {ingredients.join(", ")}
         </p>
         <div className="mt-auto flex items-center justify-between">
           {!soldOut ? (
