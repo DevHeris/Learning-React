@@ -1,7 +1,7 @@
 /* eslint-disable react-refresh/only-export-components */
 // Test ID: IIDSAT
 
-import { useLoaderData } from "react-router-dom";
+import { useFetcher, useLoaderData } from "react-router-dom";
 import { getOrder } from "../../services/apiRestaurant";
 import OrderItem from "./OrderItem";
 import {
@@ -9,11 +9,18 @@ import {
   formatCurrency,
   formatDate,
 } from "../../utilities/helpers";
+import { useEffect } from "react";
 
 function Order() {
-  // Everyone can search for all orders, so for privacy reasons we're gonna gonna exclude names or address, these are only for the restaurant staff
-
   const order = useLoaderData();
+  const fetcher = useFetcher();
+
+  useEffect(() => {
+    // console.log(1);
+    if (!fetcher.data && fetcher.state === "idle") fetcher.load("/menu");
+  }, [fetcher]);
+
+  // Everyone can search for all orders, so for privacy reasons we're gonna gonna exclude names or address, these are only for the restaurant staff
   const {
     id,
     status,
@@ -23,7 +30,7 @@ function Order() {
     estimatedDelivery,
     cart,
   } = order;
-  console.log(orderPrice, priorityPrice);
+
   const deliveryIn = calcMinutesLeft(estimatedDelivery);
 
   return (
@@ -55,7 +62,15 @@ function Order() {
       </div>
       <ul>
         {cart.map((item) => (
-          <OrderItem item={item} key={item.pizzaId} />
+          <OrderItem
+            item={item}
+            key={item.pizzaId}
+            ingredients={
+              fetcher?.data?.find((el) => el.id === item.pizzaId)
+                ?.ingredients ?? []
+            }
+            isLoadingIngredients={fetcher?.state === "loading"}
+          />
         ))}
       </ul>
       <div className="space-y-2 bg-stone-200 px-6 py-5">

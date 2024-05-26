@@ -1,16 +1,16 @@
 import { useDispatch, useSelector } from "react-redux";
 import Button from "../../ui/Button";
-import { formatCurrency } from "../../utilities/helpers";
-import { addItem, getCurrentQuantitybyId } from "../cart/cartSlice";
 import DeleteItem from "../cart/DeleteItem";
 import UpdateItemQuantity from "../cart/UpdateItemQuantity";
+import { formatCurrency } from "../../utilities/helpers";
+import { addItem, getCurrentQuantityById } from "../cart/cartSlice";
 
 function MenuItem({ pizza }) {
-  const { id, name, unitPrice, ingredients, soldOut, imageUrl } = pizza;
   const dispatch = useDispatch();
 
-  const currentQuantity = useSelector(getCurrentQuantitybyId(id));
+  const { id, name, unitPrice, ingredients, soldOut, imageUrl } = pizza;
 
+  const currentQuantity = useSelector(getCurrentQuantityById(id));
   const isInCart = currentQuantity > 0;
 
   function handleAddToCart() {
@@ -21,7 +21,6 @@ function MenuItem({ pizza }) {
       unitPrice,
       totalPrice: unitPrice * 1,
     };
-
     dispatch(addItem(newItem));
   }
 
@@ -30,9 +29,9 @@ function MenuItem({ pizza }) {
       <img
         src={imageUrl}
         alt={name}
-        className={`h-24 ${soldOut && "opacity-70 grayscale"}`}
+        className={`h-24 ${soldOut ? "opacity-70 grayscale" : ""}`}
       />
-      <div className=" flex grow flex-col pt-0.5">
+      <div className="flex grow flex-col pt-0.5">
         <p className="font-medium">{name}</p>
         <p className="text-sm capitalize italic text-stone-500">
           {ingredients.join(", ")}
@@ -45,6 +44,7 @@ function MenuItem({ pizza }) {
               Sold out
             </p>
           )}
+
           {isInCart && (
             <div className="flex items-center gap-3 sm:gap-8">
               <UpdateItemQuantity
@@ -54,8 +54,9 @@ function MenuItem({ pizza }) {
               <DeleteItem pizzaId={id} />
             </div>
           )}
+
           {!soldOut && !isInCart && (
-            <Button onClick={handleAddToCart} type="small">
+            <Button type="small" onClick={handleAddToCart}>
               Add to cart
             </Button>
           )}

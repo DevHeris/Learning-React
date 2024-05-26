@@ -152,8 +152,6 @@ export async function action({ request }) {
     priority: data.priority === "true",
   };
 
-  console.log(order);
-
   const errors = {};
   if (!isValidPhone(order.phone))
     errors.phone =
