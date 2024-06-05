@@ -10,6 +10,7 @@ import CreateOrder, {
 import { action as updateOrderAction } from "./features/order/UpdateOrder";
 import Cart from "./features/cart/Cart";
 import AppLayout from "./ui/AppLayout";
+import { useEffect } from "react";
 
 const router = createBrowserRouter([
   {
