@@ -1,6 +1,6 @@
 import { faker } from "@faker-js/faker";
 import { useState } from "react";
-import "./styles.css";
+import withToggles from "./HOC";
 
 const products = Array.from({ length: 20 }, () => {
   return {
@@ -46,7 +46,7 @@ function CompanyItem({ company, defaultVisibility }) {
   );
 }
 
-function List({ title, items }) {
+function List({ title, items, render }) {
   const [isOpen, setIsOpen] = useState(true);
   const [isCollapsed, setIsCollapsed] = useState(false);
 
@@ -65,29 +65,10 @@ function List({ title, items }) {
           {isOpen ? <span>&or;</span> : <span>&and;</span>}
         </button>
       </div>
-      {isOpen && (
-        <ul className="list">
-          {displayItems.map((product) => (
-            <ProductItem key={product.productName} product={product} />
-          ))}
-        </ul>
-      )}
-
+      {isOpen && <ul className="list">{displayItems.map(render)}</ul>}
       <button onClick={() => setIsCollapsed((isCollapsed) => !isCollapsed)}>
         {isCollapsed ? `Show all ${items.length}` : "Show less"}
       </button>
-    </div>
-  );
-}
-
-export default function App() {
-  return (
-    <div>
-      <h1>Render Props Demo</h1>
-
-      <div className="col-2">
-        <List title="Products" items={products} />
-      </div>
     </div>
   );
 }
@@ -100,5 +81,47 @@ function ProductList({ title, items }) {
         <ProductItem key={product.productName} product={product} />
       ))}
     </ul>
+  );
+}
+
+const ProductListWithToggle = withToggles(ProductList);
+
+export default function App() {
+  return (
+    <div>
+      <h1>Render Props Demo</h1>
+
+      {/* <div className="col-2">
+        <List
+          title="Products"
+          items={products}
+          render={(product) => (
+            <ProductItem key={product.productName} product={product} />
+          )}
+        />
+        <List
+          title="companies"
+          items={companies}
+          render={(company) => (
+            <CompanyItem
+              key={company.companyName}
+              company={company}
+              defaultVisibility={false}
+            />
+          )}
+        />
+      </div> */}
+
+      <div className="col-2">
+        <ProductList
+          title="products without HOC functionalities"
+          items={products}
+        />
+        <ProductListWithToggle
+          title="products with HOC functionalities"
+          items={products}
+        />
+      </div>
+    </div>
   );
 }
