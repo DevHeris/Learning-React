@@ -1,5 +1,4 @@
 import { useUpdateSetting } from "./useUpdateSetting";
-import { updateSetting } from "../../services/apiSettings";
 import { useSettings } from "./useSettings";
 import Form from "../../ui/Form";
 import FormRow from "../../ui/FormRow";
