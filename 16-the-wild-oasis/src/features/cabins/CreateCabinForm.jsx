@@ -71,7 +71,6 @@ function CreateCabinForm({ cabinToEdit = {}, onCloseModal }) {
           })}
         />
       </FormRow>
-
       <FormRow label="Maximum capacity" error={errors?.maxCapacity?.message}>
         <Input
           type="number"
@@ -86,7 +85,7 @@ function CreateCabinForm({ cabinToEdit = {}, onCloseModal }) {
           })}
         />
       </FormRow>
-
+      1
       <FormRow label="Regular price" error={errors?.regularPrice?.message}>
         <Input
           type="number"
@@ -101,7 +100,6 @@ function CreateCabinForm({ cabinToEdit = {}, onCloseModal }) {
           })}
         />
       </FormRow>
-
       <FormRow label="Discount" error={errors?.discount?.message}>
         <Input
           type="number"
@@ -131,7 +129,6 @@ function CreateCabinForm({ cabinToEdit = {}, onCloseModal }) {
           })}
         />
       </FormRow>
-
       <FormRow label="Cabin photo" error={errors?.name?.message}>
         <FileInput
           id="image"
@@ -142,7 +139,6 @@ function CreateCabinForm({ cabinToEdit = {}, onCloseModal }) {
           })}
         />
       </FormRow>
-
       <FormRow>
         {/* type is an HTML attribute! */}
         <Button
