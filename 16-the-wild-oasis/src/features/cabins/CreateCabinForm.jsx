@@ -85,7 +85,7 @@ function CreateCabinForm({ cabinToEdit = {}, onCloseModal }) {
           })}
         />
       </FormRow>
-      1
+
       <FormRow label="Regular price" error={errors?.regularPrice?.message}>
         <Input
           type="number"
